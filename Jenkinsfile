@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'linux'
+    }
 
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
@@ -10,7 +12,7 @@ pipeline {
         stage('pull scm') {
             steps {
                 // Get some code from a GitHub repository
-                git credentialsId: 'github', url: 'git@github.com:alokbetgerikar/jenkins_test.git'
+                git credentialsId: 'github', url: 'git@github.com:{your github id}/jenkins_test.git'
             }
         }
         
@@ -32,8 +34,8 @@ pipeline {
                 junit 'api-gateway/target/surefire-reports/*.xml'
             }
         }
-
-         stage('test new stage') {
+        
+        stage('test') {
             steps {
                 sh "echo testing"
             }
